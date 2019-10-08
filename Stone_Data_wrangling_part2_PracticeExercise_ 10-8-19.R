@@ -151,10 +151,12 @@ islandinsects <- transplant %>%
   ?summarise
   
  islandinsects <- transplant %>%
-  group_by(island) %>%
-  summarise(mean = mean(numinsects), na.omit) 
+  group_by(island, site, transect) %>%
+  summarise(totalinstrans = sum(numinsects, na.rm=T))  %>%
+  group_by(island)  %>%
+  summarise(meaninsects = mean(totalinstrans,na.rm = T) 
   
-  #Another try to get an expected result - not successful
+  #Another try -- group by all three then by island
 
 #8c) a table that shows the min and max number of insects per transect
 
@@ -177,9 +179,18 @@ numinsectorder <- transplant %>%
 
           numinsectorder <- transplant %>%
           group_by(insectorder) %>%
-          summarize (n_distinct(site[site != 0]), na.rm = TRUE)       
+          summarize (n_distinct(site[site != 0]), na.rm = TRUE)   
           
-#Same result without 0s and NAs so my original analysis holds true
+#Same result without 0s and NAs -- this did not work
+
+   numinsectorder <- transplant %>%
+          group_by(insectorder) %>%
+          filter(numinsects>0) %>%
+          summarize (numsites = n_distinct(site)
+          
+  
+#This works - use filter instead of square brackets - inside tidyverse
+
 
 #9b) For that insect order, calculate the mean and sd by site. 
 
