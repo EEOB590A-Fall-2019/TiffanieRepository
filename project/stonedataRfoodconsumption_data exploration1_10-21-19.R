@@ -1,3 +1,4 @@
+###Tiffanie Stone R EEOB590A - Dataset for Analysis
 # Repository: Uploading US Food Consumption Data from 1994 - 2008
 # The purpose is to upload this national data set which will be used to find trends in food consumption over time and across low and high income groups of people. 
 #This information will form a baseline for US food consumption as we explore food system sustainability in Des Moines.
@@ -17,10 +18,9 @@ usfoodconsumption$athomeawayfromhome <- as.factor(usfoodconsumption$athomeawayfr
 # Changed text to factors because they are all categorical factors.
 
 # The data is now imported and able to be used for further data analysis
-#Data Wrangling is complete - See data wrangling file in project folder. Tidy data is ready for data exploration
+#See data wrangling file in project folder. Tidy data is ready for data exploration
 
 #Part 2: Data Exploration -- 
-
 
 library(tidyverse)
 library(ggplot2)
@@ -77,7 +77,6 @@ ggplot(foodawayhome, aes(foodtype, avgconsum))+
 #Food eaten out varies more year to year by food category that food eaten at home
 
 
-
 top5foodtypes <- foodathome %>%
   group_by(foodtype) %>%
   arrange(desc(avgconsum)) %>%
@@ -90,9 +89,11 @@ top5foodtypes <- foodathome %>%
   geom_point(aes(x=year,y= loincomeavg,size=10, color = "red")) + 
   geom_point(aes(x=year ,y= hiincomeavg,size=10, color = "green")) 
  
-#Here I am tryingto compare low, average and high income consumption, it is difficult to make any conclusions because I will need to seperate them by food types which vary widely before I can see the influence of income level. From a birds eye view, the income levels appear to be grouped very closely, there is not a wide variation.
+#Here I am trying to compare low, average and high income consumption, it is difficult to make any conclusions because I will need to seperate them by food types which vary widely before I can see the influence of income level. From a birds eye view, the income levels appear to be grouped very closely, there is not a wide variation.
 
-ggplot(foodathome, aes(x = year, y = avgconsum))+
+
+  #I am still working with the graphs below - they are not running properly and I am not able to answer any important questions with them yet.
+  ggplot(foodathome, aes(x = year, y = avgconsum))+
   geom_histogram()
 
 
@@ -102,3 +103,5 @@ ggplot(data = foodathome, mapping = aes(x = "year", y = (loincomeavg, hiincomeav
 ggplot(data = foodathome, mapping = aes(x = loincomeavg, y = )) +
   geom_point(na.rm = TRUE)
 
+
+### Key Question: How do I make a chart that can usefully compare the information in 3 column - low income, high income and average income graphing by food category to  be able to visualize the spread.
