@@ -91,6 +91,8 @@ top5foodtypes <- foodathome %>%
  
 #Here I am trying to compare low, average and high income consumption, it is difficult to make any conclusions because I will need to seperate them by food types which vary widely before I can see the influence of income level. From a birds eye view, the income levels appear to be grouped very closely, there is not a wide variation.
 
+  
+  ### Key Question: How do I make a chart that can usefully compare the information in 3 column - low income, high income and average income graphing by food category to  be able to visualize the spread.
 
   #I am still working with the graphs below - they are not running properly and I am not able to answer any important questions with them yet.
   ggplot(foodathome, aes(x = year, y = avgconsum))+
@@ -104,4 +106,6 @@ ggplot(data = foodathome, mapping = aes(x = loincomeavg, y = )) +
   geom_point(na.rm = TRUE)
 
 
-### Key Question: How do I make a chart that can usefully compare the information in 3 column - low income, high income and average income graphing by food category to  be able to visualize the spread.
+ggplot()
+facet_grid(foodtype~ year, scales="free_y" )
+
