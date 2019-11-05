@@ -93,12 +93,19 @@ summary(traitslm)
 
 ### Summary of data exploration ### 
 #what did you find? 
+
 #no significant relationships between thickness of leaves and island or species
 
 ### Linear model #### 
 # Create a linear model to test whether leaf thickness varies by island, and whether that depends on the plant species. 
 
 #Option 1: Create a full model, remove interaction if not significant, but otherwise do not simplify. 
+traitsmod1 <- lm(thickness ~ species*island, data=traits)
+anova(traitsmod1) 
+
+#If insignificant remove interaction -- 
+
+traitsmod1a <- lm(thickness ~ species + island, data = traits) 
 
 #Option 2: Create a full model, remove any non-significant interactions to get final model. 
 
