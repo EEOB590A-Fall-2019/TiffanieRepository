@@ -106,12 +106,45 @@ anova(traitsmod1)
 #If insignificant remove interaction -- 
 
 traitsmod1a <- lm(thickness ~ species + island, data = traits) 
+anova(traitsmod1a) 
 
-#Option 2: Create a full model, remove any non-significant interactions to get final model. 
+#interaction is significant - This is final model. 
+
+#Option 2: Create a full model, remove any non-significant interactions to get final model.
+
+traitsmod2 <- lm(thickness ~ island*species, data = traits)
+anova(traitsmod2)
+
+#all main effects & interaction significant - This is final model. 
 
 #Option 3: Create a full model, and all submodels, and compare using Likelihood ratio tests (anova(mod1, mod2)) to choose the best fitting model. 
+thick1 <- lm(thickness ~ island*species, data = traits)
+thick2 <- lm(thickness ~ island + species, data = traits)
+thick3 <- lm(thickness ~ island, data=traits)
+thick4 <- lm(thickness ~ species, data = traits)
+thick5 <- lm(thickness ~ 1, data = traits)
 
+anova(thick1, thick2)
+anova(thick1, thick3)
+anova(thick1, thick4)
+anova(thick1, thick5)
+anova(thick2, thick3)
+anova(thick2, thick4)
+anova(thick2, thick5)
+anova(thick3, thick4)
+anova(thick3, thick5)
+anova(thick4, thick5)
+
+anova(thick1, thick2, thick3, thick4,thick5)
+#? Not sure if this works well or not?
+#stepaic
 #Option 4: Create a full model and all submodels and compare AIC values to choose the best fitting model
+thick1 <- lm(thickness ~ island*species, data = traits)
+thick2 <- lm(thickness ~ island + species, data = traits)
+thick3 <- lm(thickness ~ island, data=traits)
+thick4 <- lm(thickness ~ species, data = traits)
+thick5 <- lm(thickness ~ 1, data = traits)
 
+AIC(thick1, thick2, thick3, thick4, thick5) #thick 1 is the best model - SMALLEST IS BEST
 
 #Next week, we will assess model fit, and then interpret results. 
