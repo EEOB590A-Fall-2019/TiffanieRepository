@@ -1,6 +1,9 @@
 # Tiffanie Stone - Data Simulation - 10/24/2019
 
 library(tidyverse)
+library(ggplot2)
+library(ggthemes)
+library(ggridges)
 
 #Simulating a data set using means and 95% confidence intervals for the vegetable portion of the dataset. 
 
@@ -8,18 +11,77 @@ library(tidyverse)
 
 #took low and high data for each food type throughout years and averaged them to create approximate mean, used range/2 as standard dev.
 
-vegmean94 <- rnorm(n= 250, mean=c(109.87), sd = c(4.12)) #simulate avg veg consumption in 94-98
+vegmean94 <- rnorm(n= 500, mean=c(109.87), sd = c(18.204)) #simulate avg veg consumption in 94-98
 
-veglowinc94 <- rnorm(n= , mean=c(106.11), sd = c(5.36)) #simulate avg low income veg consumption in 94-98
+veglowinc94 <- rnorm(n=500, mean=c(105.69), sd = c(16.5994)) #simulate avg low income veg consumption in 94-98
 
-veghighinc94 <- rnorm(n= 8, mean=c(174.93), sd = c(2.9)) #simulate avg high income veg consumption in 94-98
+veghighinc94 <- rnorm(n= 500, mean=c(111.76), sd = c(18.9233)) #simulate avg high income veg consumption in 94-98
+
+
+vegmean03 <- rnorm(n= 500, mean=c(105.72), sd = c(23.7582)) #simulate avg veg consumption in 03-04
+
+veglowinc03 <- rnorm(n=500, mean=c(103.77), sd = c(22.3607)) #simulate avg low income veg consumption in 03-04
+
+veghighinc03 <- rnorm(n= 500, mean=c(106.94), sd = c(24.6526)) #simulate avg high income veg consumption in 03-04
 
 
 
-             avgconsum2 <- c(fruit, veg, dairy, meat, grain, oil)
+vegmean05 <- rnorm(n= 500, mean=c(103.03), sd = c(24.1495)) #simulate avg veg consumption in 05-06
 
-  #Repeat for low and high income 
-             # Expect slightly more oil and grain by 2 lb for low income and less fruits and vegetables by 2 lb. Same standard dev.
+veglowinc05 <- rnorm(n=500, mean=c(104.21), sd = c(22.3607)) #simulate avg low income veg consumption in 05-06
+
+veghighinc05 <- rnorm(n= 500, mean=c(102.48), sd = c(25.044)) #simulate avg high income veg consumption in 05-06
+
+
+
+vegmean07 <- rnorm(n= 500, mean=c(102.76), sd = c(22.9197)) #simulate avg veg consumption in 07-08
+
+veglowinc07 <- rnorm(n=500, mean=c(99.62), sd = c(21.2426)) #simulate avg low income veg consumption in 07-08
+
+veghighinc07 <- rnorm(n= 500, mean=c(104.83), sd = c(24.0377)) #simulate avg high income veg consumption in 07-08
+
+             simveg <- c(vegmean94, vegmean03, vegmean05, vegmean07, veglowinc94,veglowinc03,veglowinc05, 
+                         veglowinc07, veghighinc94, veghighinc03, veghighinc05,veghighinc07)
+#Together the dataset simulated has 2000 participants for low income, high income and average income per year
+             
+             
+#simulate predictors
+             
+             year <- factor(rep (c("94-98", "03-04", "05-06", "07-08"), each = 500, times = 3))
+             incomelevel <- factor(rep (c("mean", "low", "high"), each = 2000, times = 1))
+             
+             
+             #combine all into a dataframe 
+             
+             vegsim <- data.frame(simveg, year, incomelevel)
+             write.csv(vegsim,"data/tidy/vegsim.csv")
+             
+             #look at response
+             
+             ggplot(vegsim, aes(year, simvegmean))+
+               geom_boxplot()
+             
+             ggplot(vegsim, aes(year, simveglow))+
+               geom_boxplot()
+             
+             ggplot(vegsim, aes(year, simveghigh))+
+               geom_boxplot()
+             
+             
+             ggplot(vegsim, aes(x = simveg, y = year, fill = incomelevel)) +
+               geom_density_ridges(alpha=0.5) +
+               theme_ridges() +
+               scale_y_discrete("Year", labels = c("1994-1998", "2003-2004", "2005-2006", "2007-2008")) +
+               scale_x_continuous("Average US Vegetable Consumption") 
+             
+             #Run a model with dataset
+             
+             usfoodmodel2 <- lm(avgconsum2 ~ year2*foodtype2)
+             summary(usfoodmodel2)
+             
+             
+  ###PART 2: 
+             
              fruitlo <- rnorm(n= 8, mean=c(96.11), sd = c(4.12)) #simulate low income fruit consumption each year
              veglo <- rnorm(n= 8, mean=c(104.11), sd = c(5.36)) #simulate low income veg consumption each year
              dairylo <- rnorm(n= 8, mean=c(174.93), sd = c(2.9)) #simulate low income dairy consumption each year
@@ -40,34 +102,6 @@ veghighinc94 <- rnorm(n= 8, mean=c(174.93), sd = c(2.9)) #simulate avg high inco
              
              hiconsum2 <- c(fruithi, veghi, dairyhi, meathi, grainhi, oilhi)
 
-#simulate predictors
-
-foodtype2 <- rep(c("fruit", "veg", "dairy", "meat", "grain", "oil"), each= 8, times = 6)            
-foodhomeawayhome2 <- factor(rep (c("fah", "afh"), each = 4, times = 12))
-year2 <- factor(rep (c("94-98", "03-04", "05-06", "07-08"), each = 1, times = 12))
-
-
-#combine all into a dataframe 
-
-usfoodsim2 <- data.frame(avgconsum2, hiconsum2, loconsum2, foodtype2, foodhomeawayhome2, year2)
-write.csv(usfoodsimulation,"data/tidy/usfoodsim2.csv")
-
-#look at response
-
-ggplot(usfoodsim2, aes(foodtype2, avgconsum2))+
-  geom_boxplot()
-
-ggplot(usfoodsim2, aes(foodtype2, loconsum2))+
-  geom_boxplot()
-
-ggplot(usfoodsim2, aes(foodtype2, hiconsum2))+
-  geom_boxplot()
-
-
-#Run a model with dataset
-
-usfoodmodel2 <- lm(avgconsum2 ~ year2*foodtype2)
-summary(usfoodmodel2)
 
 
 ##Other ways to seperate out different food types which vary in quantity -- oil lower than grains for example.
