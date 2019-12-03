@@ -48,7 +48,7 @@ write.csv(usfoodconsumption, "data/tidydata/usfoodsconsumption_tidy_clean.csv", 
 #use filter to extract rows according to some category
 
 foodawayhome <- usfoodconsumption %>%
-  filter(`foodhomeawayhome` == "afh")
+  filter("afh" == `foodhomeawayhome`)
 
 
 foodathome <- usfoodconsumption %>%
@@ -74,21 +74,51 @@ ggplot(foodawayhome, aes(foodtype, meanus))+
 #use count to count the number of rows in each group
 
 foodathome %>%
-  count(foodhomeawayhome)  #piping approach
+  count(foodhomeawayhome) 
 
 
 ##### 4 Group data (group_by) ################
 #use group_by to split a dataframe into different groups -- I want to make this wide data set long by combining the columns together making the income category (low, mean, high) a row
 
+#1st rename columns for clarity -- ci = confidence interval
+foodathome <- foodathome %>% 
+  rename(
+    avgconsum = meanus,
+    avglowincome = meanlincome,
+    avghighincome = meanhincome,
+    lowciavg = lowus,
+    upperciavg = upus,
+    lowcilowincome = lowlincome,
+    uppercilowincome = uplincome,
+    lowcihighincome = lowhincome,
+    uppercihighincome = uphincome)
 
-olddata_wide$subject <- factor(olddata_wide$subject)  
+#Reorder columns for grouping
+
+foodathome <- foodathome[c("foodtype", "years", "foodhomeawayhome", "avgconsum", "avglowincome", "avghighincome", "lowciavg", "lowcilowincome", "lowcihighincome", "upperciavg", "uppercilowincome", "uppercihighincome" )]
+
+#Add a new column with income level
+foodathome$incomelevel <- factor(rep (c("mean", "low", "high"), each = 2000, times = 1))
+
+meanconsump <- gather(foodathome, "incomelevels", "avgconsumption", 4:6)
+
+# I need three columns (avg, lowci and highci) to connect to the row income levels to make this wide dataset long
+
+lowciconsump <- gather(foodathome, "incomelevels", "lowconfidenceinterval", 7:9)
+
+upperciconsump <- gather(foodathome, "incomelevels", "meanincome", 10:12)
 
 
-foodathome <- foodathome[c("foodtype", "years", "foodhomeawayhome", "meanus", "meanlincome", "meanhincome", "lowus", "upus", "lowlincome", "uplincome", "lowhincome", "uphincome" )]
 
-meanconsump <- gather(foodathome, "incomelevels", "meanincome", 4:6)
+foodathome %>% gather(avgconsum, avglowincome, avghighincome, starts_with("avgconsum")) %>% 
+  gather(loop_number, Q3.3, starts_with("Q3.3")) %>%
+  mutate(loop_number = str_sub(loop_number,-2,-2))
 
- 
+
+
+foodathome$ <- factor(olddata_wide$subject)  
+
+
 
 #  longfah <- foodathome %>%
  #   pivot_longer(c(meanus, meanlincome, meanhincome)
@@ -103,6 +133,6 @@ meanconsump <- meanconsump %>%
 
 ###7) Print summary database
 
-write.csv(meanconsump, "data/tidydata/transplant_summary.csv", row.names=F)
+write.csv(meanconsump, "data/tidydata/wrangledusconsump.csv", row.names=F)
 
 

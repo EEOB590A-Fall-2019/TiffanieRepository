@@ -5,27 +5,20 @@
 #This information will form a baseline for US food consumption as we explore food system sustainability in Des Moines
 
 
-#Part 1: Data Import 
+#Part 1: Import Wrangled Data --------
+##See data wrangling file in project folder.
 
-library(readxl)
+
 getwd()
-
-usfoodconsumption <- read_excel('data/tidydata/foodconsumptionRdata.xlsx', skip = 1)
-# Read in file, named columns, set column data types to options available with read_excel function. Still need to convert some to factors.
-
-usfoodconsumption$foodtype <- as.factor(usfoodconsumption$foodtype)
-usfoodconsumption$years <- as.factor(usfoodconsumption$years)
-usfoodconsumption$'fah/afh' <- as.factor(usfoodconsumption$'fah/afh')
-# Changed text to factors because they are all categorical factors.
+usfoodconsumption <- read_csv('data/tidydata/wrangledusconsump.csv')
 
 
-# The data is now imported and able to be used for further data analysis
-#See data wrangling file in project folder. Tidy data is ready for data exploration
-
-#Part 2: Data Exploration -- 
+#Part 2: Data Exploration -------
 
 library(tidyverse)
 library(ggplot2)
+library(ggthemes)
+library(ggridges)
 library(DataExplorer)
 library(skimr)
 library(forcats)
@@ -64,6 +57,18 @@ ggplot(usfoodconsumption, aes(avgconsum,loincomeavg, hiincomeavg, color=foodtype
  
 #Here I am trying to compare low, average and high income consumption, it is difficult to make any conclusions because I will need to seperate them by food types which vary widely before I can see the influence of income level. From a birds eye view, the income levels appear to be grouped very closely, there is not a wide variation.
 
+  
+  ggplot(vegsim, aes(x = simveg, y = year, fill = incomelevel)) +
+    geom_density_ridges(alpha=0.5) +
+    theme_ridges() +
+    scale_y_discrete("Year", labels = c("1994-1998", "2003-2004", "2005-2006", "2007-2008")) +
+    scale_x_continuous("Average US Vegetable Consumption") 
+  
+  #Run a model with dataset
+  
+  usfoodmodel2 <- lm(avgconsum2 ~ year2*foodtype2)
+  summary(usfoodmodel2)
+  
   
   ### Key Question: How do I make a chart that can usefully compare the information in 3 column - low income, high income and average income graphing by food category to  be able to visualize the spread.
 

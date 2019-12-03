@@ -78,37 +78,11 @@ veghighinc07 <- rnorm(n= 500, mean=c(104.83), sd = c(24.0377)) #simulate avg hig
              
              usfoodmodel2 <- lm(avgconsum2 ~ year2*foodtype2)
              summary(usfoodmodel2)
+            
+              
+             
+  ###PART 2: Data Simulation by vegetable
+             
+      
              
              
-  ###PART 2: 
-             
-             fruitlo <- rnorm(n= 8, mean=c(96.11), sd = c(4.12)) #simulate low income fruit consumption each year
-             veglo <- rnorm(n= 8, mean=c(104.11), sd = c(5.36)) #simulate low income veg consumption each year
-             dairylo <- rnorm(n= 8, mean=c(174.93), sd = c(2.9)) #simulate low income dairy consumption each year
-             meatlo <- rnorm(n= 8, mean=c(88.02), sd = c(2.88)) #simulate low income meat consumption each year
-             grainlo <- rnorm(n= 8, mean=c(96.76), sd = c(2.43)) #simulate low income grain consumption each year
-             oillo <- rnorm(n= 8, mean=c(36.1), sd = c(5.92)) #simulate low income oil consumption each year
-             
-             loconsum2 <- c(fruitlo, veglo, dairylo, meatlo, grainlo, oillo)
-             
-             #Expecting slightly more fruit and vegetables by 2 lb higher mean for high income. Same standard dev.
-             
-             fruithi <- rnorm(n= 8, mean=c(100.11), sd = c(4.12)) #simulate low income fruit consumption each year
-             veghi <- rnorm(n= 8, mean=c(108.11), sd = c(5.36)) #simulate low income veg consumption each year
-             dairyhi <- rnorm(n= 8, mean=c(174.93), sd = c(2.9)) #simulate low income dairy consumption each year
-             meathi <- rnorm(n= 8, mean=c(88.02), sd = c(2.88)) #simulate low income meat consumption each year
-             grainhi <- rnorm(n= 8, mean=c(94.76), sd = c(2.43)) #simulate low income grain consumption each year
-             oilhi <- rnorm(n= 8, mean=c(34.1), sd = c(5.92)) #simulate low income oil consumption each year
-             
-             hiconsum2 <- c(fruithi, veghi, dairyhi, meathi, grainhi, oilhi)
-
-
-
-##Other ways to seperate out different food types which vary in quantity -- oil lower than grains for example.
-?aggregate
-#usfoodsimulation %>%
- # aggregate(avghiincome ~ avguscomp, foodtype, data = avgloincome, mean)
-#aggregate(breaks ~ wool + tension, data = warpbreaks, mean)
-#aggregate(cbind(Ozone, Temp) ~ Month, data = airquality, mean)
-#aggregate( foodtype ~ oil, 10, 10)
-
