@@ -3,7 +3,7 @@
 library(tidyverse)
 library(ggplot2)
 library(ggthemes)
-library(ggridges)
+
 
 #Simulating a data set using means and 95% confidence intervals for the vegetable portion of the dataset. 
 
@@ -61,9 +61,14 @@ veghighinc07 <- rnorm(n= 500, mean=c(104.83), sd = c(24.0377)) #simulate avg hig
              write.csv(vegsim,"data/tidydata/vegsim.csv")
              
              
-  
+# Make sure dataset looks correct
+             summary(vegsim)
 
+             ggplot(vegsim, aes(year, simveg))+
+               geom_boxplot()
              
+             ggplot(vegsim, aes(incomelevel, simveg))+
+               geom_boxplot()           
              
             
               
