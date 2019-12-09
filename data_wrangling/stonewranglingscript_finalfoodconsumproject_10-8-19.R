@@ -95,39 +95,32 @@ foodathome <- foodathome %>%
 
 #Reorder columns for grouping
 
-foodathome <- foodathome[c("foodtype", "years", "foodhomeawayhome", "avgconsum", "avglowincome", "avghighincome", "lowciavg", "lowcilowincome", "lowcihighincome", "upperciavg", "uppercilowincome", "uppercihighincome" )]
-
-#Add a new column with income level
-foodathome$incomelevel <- factor(rep (c("mean", "low", "high"), each = 2000, times = 1))
-
-meanconsump <- gather(foodathome, "incomelevels", "avgconsumption", 4:6)
-
-# I need three columns (avg, lowci and highci) to connect to the row income levels to make this wide dataset long
-
-lowciconsump <- gather(foodathome, "incomelevels", "lowconfidenceinterval", 7:9)
-
-upperciconsump <- gather(foodathome, "incomelevels", "meanincome", 10:12)
+foodathome <- foodathome[c("foodtype", "years", "foodhomeawayhome", "lowciavg", "lowcilowincome", "lowcihighincome", "upperciavg", "uppercilowincome", "uppercihighincome", "avgconsum", "avglowincome", "avghighincome" )]
 
 
+# Make wide dataset long
+#I need three columns (avg, lowci and highci) to connect to the row income levels 
 
-foodathome %>% gather(avgconsum, avglowincome, avghighincome, starts_with("avgconsum")) %>% 
-  gather(loop_number, Q3.3, starts_with("Q3.3")) %>%
-  mutate(loop_number = str_sub(loop_number,-2,-2))
+lowciconsumption <- gather(foodathome, "incomelevels", "lowconfidenceinterval", 4:6)
 
+upperciconsump <- gather(lowciconsumption, "incomelevels", "highconfidenceinterval", 4:6)
 
+meanconsump <- gather(upperciconsump, "incomelevels", "avgconsumption", 4:6)
 
-foodathome$ <- factor(olddata_wide$subject)  
+#Convert incomelevels into a factor and then rename levels
+
+meanconsump$incomelevels <- as.factor(meanconsump$incomelevels)
+
+levels(meanconsump$incomelevels) <- c("average", "lowincome", "highincome")
 
 
 
-#  longfah <- foodathome %>%
- #   pivot_longer(c(meanus, meanlincome, meanhincome)
-                 
+#Reorder columns
 
 meanconsump <- meanconsump %>%
   group_by(foodtype)
 
-  summarize (meanconsump)
+  summary (meanconsump)
 
 
 

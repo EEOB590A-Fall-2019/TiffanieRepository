@@ -54,34 +54,21 @@ veghighinc07 <- rnorm(n= 500, mean=c(104.83), sd = c(24.0377)) #simulate avg hig
              #combine all into a dataframe 
              
              vegsim <- data.frame(simveg, year, incomelevel)
-             write.csv(vegsim,"data/tidy/vegsim.csv")
              
-             #look at response
+             vegsim$incomelevel <- as.factor (vegsim$incomelevel)
+             vegsim$year <- as.factor (vegsim$year)
              
-             ggplot(vegsim, aes(year, simvegmean))+
-               geom_boxplot()
-             
-             ggplot(vegsim, aes(year, simveglow))+
-               geom_boxplot()
-             
-             ggplot(vegsim, aes(year, simveghigh))+
-               geom_boxplot()
+             write.csv(vegsim,"data/tidydata/vegsim.csv")
              
              
-             ggplot(vegsim, aes(x = simveg, y = year, fill = incomelevel)) +
-               geom_density_ridges(alpha=0.5) +
-               theme_ridges() +
-               scale_y_discrete("Year", labels = c("1994-1998", "2003-2004", "2005-2006", "2007-2008")) +
-               scale_x_continuous("Average US Vegetable Consumption") 
+  
+
              
-             #Run a model with dataset
              
-             usfoodmodel2 <- lm(avgconsum2 ~ year2*foodtype2)
-             summary(usfoodmodel2)
             
               
              
-  ###PART 2: Data Simulation by vegetable
+
              
       
              

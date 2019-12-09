@@ -1,15 +1,14 @@
-# Repository: Uploading US Food Consumption Data from 1994 - 2008
-# The purpose is to upload my data set which will be used to find trends in food consumption over time and across low and high income groups of people.
-library(readxl)
-getwd()
+#Tiffanie Stone
+#12-6-2019
+# 590 A: R Data Management
 
+# Publicly available USDA data on National Food Consumption was analyzed to find trends and differences across years food category and income level.
+# Data will be used as a baseline for a larger study of US food systems at a city scale.
 
-usfoodconsumption <- read_excel("C:/Users/tiffa/OneDrive/Documents/2019 Fall Courses ISU/590A R/Repository/foodconsumptionRdata.xlsx", col_names = c("foodtype", "year", "fahafh", "lowus", "meanus", "upus", "lowlincome", "meanlincome", "uplincome", "lowhincome", "meanhincome", "uphincome"), col_types = c("text", "text", "text", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric"), skip = 2)
-# Read in file, named columns, set column data types to options available with read_excel function. Need to convert some to factors
+# The R scripts in this repository were used to determine:
 
-usfoodconsumption$foodtype <- as.factor(usfoodconsumption$foodtype)
-usfoodconsumption$year <- as.factor(usfoodconsumption$year)
-usfoodconsumption$fahafh <- as.factor(usfoodconsumption$fahafh)
-# Changed text to factors because they are all consistently reported with expected set answers.
+# 1. The US national trends for food consumption by food category (fruit, vegetable, grain, oil, meat, dairy) annually from 1994 - 2007. 
 
-# The data is now imported and able to be used for further data analysis
+# 2. The difference between low and high income food consumption when compared to the average.
+
+# 3. A simulated data set for vegetable consumption was statistically analyzed for significant differences across years and income levels. 

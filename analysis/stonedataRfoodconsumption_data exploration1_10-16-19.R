@@ -33,7 +33,7 @@ skim(usfoodconsumption)
 
 create_report(usfoodconsumption)
 
-#Report was interesting but not particularly helpful because I need to subset my data further.
+#Report was interesting but not particularly helpful because I need to subset my data further.- there are no missing values
 
 ggplot(usfoodconsumption, aes(foodtype, avgconsum))+
   geom_boxplot()
@@ -77,7 +77,6 @@ ggplot(foodawayhome, aes(foodtype, avgconsum))+
 #Food eaten out varies more year to year by food category that food eaten at home
 
 
-
 top5foodtypes <- foodathome %>%
   group_by(foodtype) %>%
   arrange(desc(avgconsum)) %>%
@@ -90,7 +89,7 @@ top5foodtypes <- foodathome %>%
   geom_point(aes(x=year,y= loincomeavg,size=10, color = "red")) + 
   geom_point(aes(x=year ,y= hiincomeavg,size=10, color = "green")) 
  
-#Here I am tryingto compare low, average and high income consumption, it is difficult to make any conclusions because I will need to seperate them by food types which vary widely before I can see the influence of income level. From a birds eye view, the income levels appear to be grouped very closely, there is not a wide variation.
+#Compare low, average and high income consumption, it is difficult to make any conclusions because I will need to seperate them by food types which vary widely before I can see the influence of income level. From a birds eye view, the income levels appear to be grouped very closely, there is not a wide variation.
 
 ggplot(foodathome, aes(x = year, y = avgconsum))+
   geom_histogram()
