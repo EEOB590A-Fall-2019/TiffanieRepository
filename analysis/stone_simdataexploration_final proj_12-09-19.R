@@ -105,3 +105,6 @@ aicsimveg4 <- lm(simveg ~ year, data = vegsim)
 aicsimveg5 <- lm(simveg ~ 1, data = vegsim)
 
 AIC(aicsimveg1, aicsimveg2, aicsimveg3, aicsimveg4, aicsimveg5) #aicsimveg2 is best - SMALLEST IS BEST
+
+
+#vegsimmod2a will be used for analysis (Fit-Full Method)

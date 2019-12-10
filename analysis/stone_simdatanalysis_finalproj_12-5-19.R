@@ -34,6 +34,6 @@ summary(vegsimmod2a)
 
 resid_panel(vegsimmod1a)
 
-#Find the variance - Mean and Summary Stats by group
+plot.design(vegsim)
 
-    
+
