@@ -12,3 +12,5 @@
 # 2. The difference between low and high income food consumption when compared to the average.
 
 # 3. A simulated data set for vegetable consumption was statistically analyzed for significant differences across years and income levels. 
+
+#HSR notes: Great job with class assignments & simulating data & making graphics for your presentation. Thanks for being an enthusiastic and engaged part of this class! 
